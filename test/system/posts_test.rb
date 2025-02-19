@@ -3,42 +3,69 @@ require "application_system_test_case"
 class PostsTest < ApplicationSystemTestCase
   setup do
     @post = posts(:one)
+    @user = users(:one)
+  end
+
+  def sign_in
+    visit new_session_url
+    assert_selector "h1", text: "Sign in"
+    fill_in "Email address", with: @user.email_address
+    fill_in "Password", with: "secret"
+    click_on "Sign in"
+    # Wait for successful sign in and redirect
+    assert_no_selector "h1", text: "Sign in"
   end
 
   test "visiting the index" do
+    sign_in
     visit posts_url
     assert_selector "h1", text: "Posts"
   end
 
   test "should create post" do
+    sign_in
     visit posts_url
+    assert_selector "h1", text: "Posts"
     click_on "New post"
+    assert_selector "h1", text: "New post"
 
-    fill_in "Content", with: @post.content
-    fill_in "Title", with: @post.title
-    fill_in "User", with: @post.user_id
-    click_on "Create Post"
+    within("form") do
+      fill_in "post[title]", with: @post.title
+      # Clear and fill Trix editor
+      find("trix-editor").click
+      find("trix-editor").send_keys([ %i[meta backspace], @post.content ].flatten)
+      click_button "Create Post"
+    end
 
     assert_text "Post was successfully created"
-    click_on "Back"
   end
 
   test "should update Post" do
+    sign_in
     visit post_url(@post)
-    click_on "Edit this post", match: :first
+    assert_selector "h1", text: "Showing post"
+    click_on "Edit this post"
+    assert_selector "h1", text: "Editing post"
 
-    fill_in "Content", with: @post.content
-    fill_in "Title", with: @post.title
-    fill_in "User", with: @post.user_id
-    click_on "Update Post"
+    within("form") do
+      fill_in "post[title]", with: @post.title
+      # Clear and fill Trix editor
+      find("trix-editor").click
+      find("trix-editor").send_keys([ %i[meta backspace], @post.content ].flatten)
+      click_button "Update Post"
+    end
 
     assert_text "Post was successfully updated"
-    click_on "Back"
   end
 
   test "should destroy Post" do
+    sign_in
     visit post_url(@post)
-    click_on "Destroy this post", match: :first
+    assert_selector "h1", text: "Showing post"
+
+    accept_confirm do
+      click_button "Destroy this post"
+    end
 
     assert_text "Post was successfully destroyed"
   end

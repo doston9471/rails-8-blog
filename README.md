@@ -1,24 +1,62 @@
-# README
+# Welcome to my blog
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simple blog app using Rails 8.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+```bash
+rails db:create
+rails db:migrate
+rails s
+```
 
-* System dependencies
+## Testing
 
-* Configuration
+```bash
+rails test
+```
 
-* Database creation
+## Linting
 
-* Database initialization
+```bash
+rubocop
+```
 
-* How to run the test suite
+## Security
 
-* Services (job queues, cache servers, search engines, etc.)
+- [Brakeman](https://brakemanscanner.org/)
+- [Rails Security](https://guides.rubyonrails.org/security.html)
 
-* Deployment instructions
+```bash
+brakeman
+```
 
-* ...
+## Deployment
+
+## Improvements
+
+- [ ] Add tests
+- [ ] Add pagination
+- [ ] Add search
+- [ ] Add comments
+- [ ] Add likes
+- [ ] Add user profiles
+- [ ] Add user settings
+- [ ] Add user authorization
+- [ ] ...
+
+## References
+
+- [Rails 8](https://guides.rubyonrails.org/8_0_release_notes.html)
+- [Rails 8 Security](https://guides.rubyonrails.org/security.html)
+- [Rails 8 Upgrade Guide](https://guides.rubyonrails.org/upgrading_ruby_on_rails.html)
+
+## CI/CD
+
+- [GitHub Actions](https://docs.github.com/en/actions)
+- [GitHub Actions Rails](https://github.com/marketplace/actions/setup-rails-ruby)
+- [GitHub Actions Brakeman](https://github.com/marketplace/actions/brakeman-scan)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
